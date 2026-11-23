@@ -219,7 +219,8 @@ function buildPart(name) {
     /** 'game' = the actor's own text, 'common' = the fuse common name, 'guess' = made from the actor name */
     nameSource: nm.source,
     caption: caption(name),
-    nameEn: en.name,
+    // English only when the game has a name for it; the editor shows the actor name otherwise
+    nameEn: en.source === 'none' ? undefined : en.name,
     nameSourceEn: en.source,
     captionEn: caption(name, msgsEn),
     category: categoryOf(name),

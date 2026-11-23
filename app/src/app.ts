@@ -842,6 +842,7 @@ export class App {
         game: tr('名称来自游戏文本', 'Name from the game\'s text'),
         common: tr('名称是游戏里融合时的通用名', 'Name is the game\'s generic fuse name'),
         guess: tr('游戏里没有这个零件的名字，名称根据 actor 名推测', 'The game has no name for this part; the name is made up from the actor name'),
+        none: tr('游戏里没有这个零件的名字，显示的是 actor 名', 'The game has no name for this part, so it is listed by its actor name'),
       };
       const src = nameSource(p);
       const source = src ? sources[src] || '' : '';
@@ -849,8 +850,8 @@ export class App {
         'Marked as not accepting Autobuild in the game data (AcceptAutoBuilder: False); a schematic with it may not build') : ''].filter(Boolean).join('\n');
       return h('button', { class: 'libitem ' + p.category, title: tip, onclick: () => this.addPart(p.actor) },
         h('span', { class: 'txt' },
-          h('span', { class: 'n' + (nameSource(p) === 'guess' ? ' guess' : '') }, unnamed(p) ? short : partName(p), noBuild ? h('span', { class: 'badge' }, tr('不可建造', 'no Autobuild')) : null),
-          h('span', { class: 'm' }, [mass + ' kg', sizeText(p), short].filter(Boolean).join(' · '))),
+          h('span', { class: 'n' + (nameSource(p) === 'guess' ? ' guess' : '') }, unnamed(p) ? p.actor : partName(p), noBuild ? h('span', { class: 'badge' }, tr('不可建造', 'no Autobuild')) : null),
+          h('span', { class: 'm' }, [mass + ' kg', sizeText(p), unnamed(p) ? '' : short].filter(Boolean).join(' · '))),
         this.thumbs.image(p));
     }));
   }

@@ -1,9 +1,9 @@
 // Display names for library parts, from the game's own text where it has one. Chinese (CNzh) and English (USen).
 // Order: the actor's name entry in any message file of the language (ActorMsg first) -> the same for the actor it is a
 // variant of (name with trailing parts cut off) -> the fuse "common name" in its AttachmentParam
-// (StaticMsg/AttachmentCommonName, e.g. 格板 / Grate) -> enemy figurines from the enemy's name -> descriptive names made
-// from the actor name (marked "guess"). The hand-written Chinese rules below have no English twin; English falls back
-// to the actor name split into words.
+// (StaticMsg/AttachmentCommonName, e.g. 格板 / Lattice) -> in Chinese only: enemy figurines from the enemy's name and
+// descriptive names made from the actor name (marked "guess"). English keeps to the game's text; a part without one is
+// shown by its actor name.
 'use strict';
 const { parseSarc } = require('./sarc');
 const { parseMsbt } = require('./msbt');
@@ -20,24 +20,6 @@ function materialName(actor) {
   if (!m || !s || !/^(AsbObj|SkyObj)_/.test(actor)) return null;
   const z = size.find(([k]) => actor.includes(k));
   return m[1] + s[1] + (z ? z[1] : '');
-}
-
-/** The same in English: Wood Long Board (M). */
-function materialNameEn(actor) {
-  const mat = [['WhiteWood', 'White Wood'], ['StoneLight', 'Light Stone'], ['Wood', 'Wood'], ['Metal', 'Iron'], ['Stone', 'Stone'], ['Rock', 'Rock']];
-  const shape = [['Rectangle', 'Long Board'], ['Square', 'Square Board'], ['Stick', 'Stick'], ['Pole', 'Pole'], ['Parts', 'Block']];
-  const size = [['_LL_', ' (L)'], ['_L_', ' (L)'], ['_M_', ' (M)'], ['_S_', ' (S)']];
-  const m = mat.find(([k]) => actor.includes(k));
-  const s = shape.find(([k]) => actor.includes(k));
-  if (!m || !s || !/^(AsbObj|SkyObj)_/.test(actor)) return null;
-  const z = size.find(([k]) => actor.includes(k));
-  return m[1] + ' ' + s[1] + (z ? z[1] : '');
-}
-
-/** An actor name made readable: DgnObj_Zonau_SliderBox_A_02 -> Zonau Slider Box A 02. */
-function plainName(actor) {
-  return actor.replace(/^(AsbObj|SpObj|DgnObj|FldObj|TwnObj|SkyObj|MinusObj|Obj)_/, '')
-    .replace(/_/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').replace(/\s+/g, ' ').trim();
 }
 
 const side = (s) => ({ L: '左', R: '右' }[s] || s);
@@ -170,21 +152,6 @@ function chestName(actor) {
   return `${kind}宝箱` + (tags.length ? `（${tags.join('、')}）` : '');
 }
 
-/** Treasure chests in English: Iron Chest (shrine, opened) etc. */
-function chestNameEn(actor) {
-  const m = actor.match(/^TBox_(Field|Dungeon)_(Iron|Stone|Wood|Enemy|Gamble)(.*)$/);
-  if (!m) return null;
-  const kind = { Iron: 'Iron', Stone: 'Stone', Wood: 'Wooden', Enemy: 'Enemy Camp', Gamble: 'Gamble' }[m[2]];
-  const tags = [];
-  if (m[1] === 'Dungeon') tags.push('shrine');
-  if (/Zonau/.test(m[3])) tags.push('Zonai');
-  if (/Assassin/.test(m[3])) tags.push('Yiga');
-  if (/Miasma/.test(m[3])) tags.push('gloom');
-  if (/Opened/.test(m[3])) tags.push('opened');
-  if (/CanNotOpen/.test(m[3])) tags.push('sealed');
-  return `${kind} Chest` + (tags.length ? ` (${tags.join(', ')})` : '');
-}
-
 class Namer {
   /** lang: the message language, 'CNzh' (default) or 'USen'. */
   constructor(romfs, reader, lang = 'CNzh') {
@@ -258,7 +225,11 @@ class Namer {
     if (this.common[actor]) return { name: this.common[actor], source: 'game' }; // IronBall, Barrel, Pot, ...
     const sib = this.sibling(actor);
     if (sib) return { name: sib, source: 'game' };
-    if (!this.zh) return this.nameEn(actor);
+    if (!this.zh) {
+      // English: the game's fuse common name, if any; otherwise no name (the actor name is shown)
+      const common = this.commonName(actor);
+      return common ? { name: common, source: 'common' } : { name: actor, source: 'none' };
+    }
     const mat = materialName(actor);
     if (mat) return { name: mat, source: 'guess' };
     // enemy figurines (Kilton's monster figures): the enemy's name
@@ -296,32 +267,6 @@ class Namer {
       if (m) return { name: typeof v === 'function' ? v(m) : v, source: 'guess' };
     }
     return { name: actor, source: 'none' };
-  }
-
-  /** English names past the game's own text: the same steps with English wording, then the plain actor name. */
-  nameEn(actor) {
-    const mat = materialNameEn(actor);
-    if (mat) return { name: mat, source: 'guess' };
-    const fig = actor.match(/^FldObj_Figure_(Enemy_.+?)(_Head)?$/);
-    if (fig) {
-      const sized = fig[1].match(/^(.+)_(Middle|Senior)$/);
-      if (sized && !this.names.has(fig[1]) && this.names.has(sized[1] + '_Junior')) {
-        return { name: this.names.get(sized[1] + '_Junior') + ' Figure' + (sized[2] === 'Middle' ? ' (M)' : ' (L)'), source: 'guess' };
-      }
-      let a = fig[1];
-      while (!this.names.has(a) && /_[^_]+$/.test(a)) a = a.replace(/_[^_]+$/, '');
-      if (this.names.has(a)) return { name: this.names.get(a) + ' Figure' + (fig[2] ? ' (head)' : ''), source: 'guess' };
-    }
-    const core = actor.match(/^Zonau_BlockMaster_CoreBlock(?:_(Middle|Senior))?$/);
-    if (core) {
-      const n = this.names.get('Enemy_Zonau_BlockMaster_' + (core[1] || 'Junior'));
-      if (n) return { name: n + ' Core Block', source: 'guess' };
-    }
-    const common = this.commonName(actor);
-    if (common) return { name: common, source: 'common' };
-    const chest = chestNameEn(actor);
-    if (chest) return { name: chest, source: 'guess' };
-    return { name: plainName(actor), source: 'guess' };
   }
 }
 

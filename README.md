@@ -51,8 +51,8 @@ editor reads, with collision shapes, masses, snap points, joints, and names in E
 1,400 parts, from Zonai devices and building materials to shrine objects, chests and weapons. Everything lands in
 `gamedata/library/`.
 
-Part names come from the game's text when the game has one. Some objects are never named in the game; those get a name
-made from the actor name and are shown in italics. In Chinese, a few hundred of these were named by hand.
+Part names come from the game's own text. A few hundred objects are never named in the game; in English they are simply
+listed by their actor ID. (The Chinese interface gives most of them a hand-made name, shown in italics.)
 
 ### Models (optional)
 
