@@ -26,21 +26,21 @@ const path = require('path');
 const { execSync } = require('child_process');
 const { SaveFile } = require('./lib/save');
 const { parseCai } = require('./lib/cai');
+const config = require('./lib/config');
 
 const H = {
   log: 2774999734, seq: 3531572817, camA: 3317639189, camB: 4017413287, flagA: 1744090219, flagB: 121274663, counter: 1388727046,
   directSeq: 1079518842, directUsed: 2982606130,
 };
-// TOTK_SAVE_ROOT: the folder with the slot_00 ... folders, or the folder above one account folder that holds them.
-// By default the PC build's profile/save in the game folder (TOTK_INSTALL, or zelda_king next to this project).
-const INSTALL = process.env.TOTK_INSTALL || path.resolve(__dirname, '..', '..', 'zelda_king');
-const SAVE_ROOT = process.env.TOTK_SAVE_ROOT || path.join(INSTALL, 'profile', 'save');
-const BACKUP_ROOT = process.env.TOTK_BACKUP_ROOT || path.join(__dirname, '..', 'backups');
+// The save root is the folder with the slot_00 ... folders, or the folder above one account folder that holds them
+// (TOTK_SAVE_ROOT or "saveRoot" in config.json; see lib/config.js for the defaults).
+const SAVE_ROOT = config.saveRoot();
+const BACKUP_ROOT = config.backupRoot();
 // The game caches a picture of each Autobuild history entry as Draft_<id>.png, <id> being the entry's number in
 // direct_file_save_related.sav 1079518842. The cache is shared by every slot and is used whenever a file exists for
 // the number, so an entry given a number that once belonged to another blueprint shows that blueprint's picture
 // (seen once: a new blueprint showed an older one's picture). Without a file the game draws a new picture.
-const ICON_DIR = process.env.TOTK_ICON_DIR || path.join(SAVE_ROOT, '..', 'cache', '0', 'icon');
+const ICON_DIR = config.iconDir();
 const SIZE = 6688;
 
 function accountDir(given) {

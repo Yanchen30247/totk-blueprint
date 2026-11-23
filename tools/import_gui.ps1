@@ -15,12 +15,18 @@ Add-Type -Namespace Win32 -Name Dpi -MemberDefinition '[DllImport("user32.dll")]
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
 $backend = Join-Path $PSScriptRoot 'import_backend.js'
-$nodeCmd = Get-Command node -ErrorAction SilentlyContinue
-if (-not $nodeCmd) {
-  [System.Windows.Forms.MessageBox]::Show('找不到 node。请先安装 Node.js 并确认 node 在 PATH 里。', '蓝图导入') | Out-Null
-  exit 1
+# the release's own Node (node\node.exe next to tools\) if there is one, else the installed one
+$bundled = Join-Path (Split-Path $PSScriptRoot -Parent) 'node\node.exe'
+if (Test-Path -LiteralPath $bundled) {
+  $node = $bundled
+} else {
+  $nodeCmd = Get-Command node -ErrorAction SilentlyContinue
+  if (-not $nodeCmd) {
+    [System.Windows.Forms.MessageBox]::Show('找不到 node。请先安装 Node.js 并确认 node 在 PATH 里。', '蓝图导入') | Out-Null
+    exit 1
+  }
+  $node = $nodeCmd.Source
 }
-$node = $nodeCmd.Source
 
 $g = [System.Drawing.Graphics]::FromHwnd([IntPtr]::Zero)
 $scale = $g.DpiX / 96.0

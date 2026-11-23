@@ -4,15 +4,15 @@
 //   node tools/import_backend.js plan <file> [--slot 03]                  what an import would do (nothing written)
 //   node tools/import_backend.js write <file> [--slot 03] [--force]       back up the slot and import
 //
-// Blueprint files are the .cai / .cmbact files in the blueprint folder plus any --extra. The folder is BLUEPRINT_DIR, or
-// blueprint/ in the game folder (TOTK_INSTALL, or zelda_king next to this project).
+// Blueprint files are the .cai / .cmbact files in the blueprint folder (BLUEPRINT_DIR or "blueprintDir" in config.json,
+// see lib/config.js) plus any --extra.
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const S = require('./save_inject');
+const config = require('./lib/config');
 
-const INSTALL = process.env.TOTK_INSTALL || path.resolve(__dirname, '..', '..', 'zelda_king');
-const BLUEPRINT_DIR = path.resolve(process.env.BLUEPRINT_DIR || path.join(INSTALL, 'blueprint'));
+const BLUEPRINT_DIR = config.blueprintDir();
 
 /** Chinese part names from the editor's library, when it has been built. */
 function partNames() {

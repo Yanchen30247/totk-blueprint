@@ -8,3 +8,9 @@ backups/
 node_modules/
 dist/
 *.log
+
+# your own settings and blueprints (tools/setup.js, the editor's blueprint folder)
+config.json
+blueprints/
+# release staging (tools/make_release.js)
+release/

@@ -1,27 +1,25 @@
 // Read-only access to the game's RomFS. Two layouts work:
 //   - an extracted RomFS folder (the one holding Pack/, Model/, Mals/ ...), as dumped from your own copy of the game;
 //   - a packed romfs/romfs.bin with romfs/index.json (offsets and sizes of every file) next to it.
-// Where to look: TOTK_ROMFS (either layout), else TOTK_INSTALL, else a folder named zelda_king next to this project.
+// Where to look: TOTK_ROMFS / "romfs" in config.json (either layout), else the game folder (see lib/config.js).
 // Nothing here writes into the game folder.
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 const { parseSarc } = require('./sarc');
-
-/** The game folder: TOTK_INSTALL, or zelda_king next to the project folder. */
-const DEFAULT_INSTALL = process.env.TOTK_INSTALL || path.resolve(__dirname, '..', '..', '..', 'zelda_king');
+const config = require('./config');
 
 const isPacked = (d) => fs.existsSync(path.join(d, 'index.json')) && fs.existsSync(path.join(d, 'romfs.bin'));
 const isFolder = (d) => fs.existsSync(path.join(d, 'Pack', 'ZsDic.pack.zs'));
 
 class RomFS {
-  constructor(root = process.env.TOTK_ROMFS || DEFAULT_INSTALL) {
+  constructor(root = config.romfs()) {
     const candidates = [root, path.join(root, 'romfs')];
     const packed = candidates.find(isPacked);
     const folder = packed ? null : candidates.find(isFolder);
     if (!packed && !folder) {
-      throw new Error(`No RomFS found in ${root}. Set TOTK_ROMFS to an extracted RomFS folder (the one with Pack/ and Model/ in it).`);
+      throw new Error(`No RomFS found in ${root}. Run "node tools/setup.js" (or set TOTK_ROMFS) and give it the extracted RomFS folder, the one with Pack/ and Model/ in it.`);
     }
     this.dir = packed || folder;
     this.dicts = null;
@@ -94,4 +92,4 @@ class RomFS {
   }
 }
 
-module.exports = { RomFS, DEFAULT_INSTALL };
+module.exports = { RomFS };
