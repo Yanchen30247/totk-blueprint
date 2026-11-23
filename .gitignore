@@ -1,0 +1,10 @@
+# Everything read or derived from the game stays on your machine and out of the repository.
+gamedata/
+*.cai
+*.cmbact
+*.sav
+backups/
+
+node_modules/
+dist/
+*.log
