@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/images/logo.png" alt="" width="128">
+
 # Zelda TotK Blueprint Editor
 
 **在电脑上设计《王国之泪》的究极手载具，然后在游戏里用究极建造直接造出来。**

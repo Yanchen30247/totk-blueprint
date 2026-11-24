@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/images/logo.png" alt="" width="128">
+
 # Zelda TotK Blueprint Editor
 
 **Design Ultrahand builds for *Tears of the Kingdom* on your PC, then build them in the game with Autobuild.**
