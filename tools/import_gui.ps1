@@ -302,7 +302,7 @@ function Show-Plan {
     $lines.Add("导入后：写进 slot_$($p.slot) 的条目 $($p.index)，排在历史最前面。")
     if ($p.dup -ge 0) { $lines.Add("注意：历史条目 $($p.dup) 和它完全相同，会再多一份。") }
     elseif ($p.similar -ge 0) { $lines.Add("注意：历史条目 $($p.similar) 的零件和粘合与它相同，可能已经导入过（游戏建造后会微调保存的位置）。") }
-    $lines.Add('导入前会把这个存档槽备份到 totk-blueprint\backups。')
+    $lines.Add('导入前会先把这个存档槽备份到 backups 文件夹。')
     $script:plan = $p
     $importBtn.Enabled = $true
   } else {

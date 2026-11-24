@@ -1,11 +1,11 @@
 <div align="center">
 
-# totk-blueprint
+# Zelda TotK Blueprint Editor
 
 **Design Ultrahand builds for *Tears of the Kingdom* on your PC, then build them in the game with Autobuild.**
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/Yanchen30247/totk-blueprint?label=release)](https://github.com/Yanchen30247/totk-blueprint/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Yanchen30247/zelda-totk-blueprint-editor?label=release)](https://github.com/Yanchen30247/zelda-totk-blueprint-editor/releases/latest)
 ![Node.js 22.15+](https://img.shields.io/badge/node-22.15%2B-339933?logo=node.js&logoColor=white)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6)
 
@@ -57,12 +57,12 @@ extracted from your own copy of the game, on your own machine.
 
 ### From a release
 
-Download a package from [Releases](https://github.com/Yanchen30247/totk-blueprint/releases/latest):
+Download a package from [Releases](https://github.com/Yanchen30247/zelda-totk-blueprint-editor/releases/latest):
 
 | Package | What's in it |
 |---|---|
-| `totk-blueprint-<version>-win-x64-portable.zip` | Everything, including Node.js. Unzip and go. Windows only. |
-| `totk-blueprint-<version>.zip` | The same without Node.js. Needs Node.js 22.15+ installed; the editor also runs on Linux and macOS. |
+| `zelda-totk-blueprint-editor-<version>-win-x64-portable.zip` | Everything, including Node.js. Unzip and go. Windows only. |
+| `zelda-totk-blueprint-editor-<version>.zip` | The same without Node.js. Needs Node.js 22.15+ installed; the editor also runs on Linux and macOS. |
 
 Then:
 
@@ -77,8 +77,8 @@ Without Windows, run the same steps with Node: `node tools/setup.js`, then `node
 ### From source
 
 ```powershell
-git clone https://github.com/Yanchen30247/totk-blueprint.git
-cd totk-blueprint
+git clone https://github.com/Yanchen30247/zelda-totk-blueprint-editor.git
+cd zelda-totk-blueprint-editor
 node tools/setup.js
 npm --prefix app install
 npm --prefix app run dev

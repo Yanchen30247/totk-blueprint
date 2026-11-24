@@ -12,7 +12,7 @@ async function load<T>(name: string): Promise<T> {
 async function start() {
   const root = document.getElementById('root')!;
   document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
-  document.title = tr('究极手蓝图编辑器', 'Ultrahand Blueprint Editor');
+  document.title = tr('塞尔达 王国之泪 蓝图编辑器', 'Zelda TotK Blueprint Editor');
   try {
     const [lib, drafts] = await Promise.all([load<Library>('library.json'), load<Draft[]>('drafts.json')]);
     // Models are optional: without tools/build_models.js the editor shows collision shapes.

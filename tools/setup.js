@@ -32,7 +32,7 @@ async function ask(rl, question, valid, optional) {
 }
 
 async function main() {
-  console.log('TotK blueprint editor setup / 初始化\n');
+  console.log('Zelda TotK Blueprint Editor setup / 初始化\n');
   const rl = quiet ? null : readline.createInterface({ input: process.stdin, output: process.stdout });
   const changes = {};
 

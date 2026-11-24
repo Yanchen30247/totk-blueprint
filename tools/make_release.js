@@ -1,6 +1,6 @@
 // Build the release packages into release/:
-//   totk-blueprint-v<version>.zip                    the built editor, the tools, launchers and docs (needs Node.js)
-//   totk-blueprint-v<version>-win-x64-portable.zip   the same plus node\node.exe and its LICENSE
+//   zelda-totk-blueprint-editor-v<version>.zip                    the built editor, the tools, launchers and docs (needs Node.js)
+//   zelda-totk-blueprint-editor-v<version>-win-x64-portable.zip   the same plus node\node.exe and its LICENSE
 //
 //   node tools/make_release.js [--node-zip <node-vX.Y.Z-win-x64.zip from nodejs.org>]
 //
@@ -14,7 +14,7 @@ const { execFileSync, execSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'release');
 const version = JSON.parse(fs.readFileSync(path.join(ROOT, 'app', 'package.json'), 'utf8')).version;
-const NAME = `totk-blueprint-v${version}`;
+const NAME = `zelda-totk-blueprint-editor-v${version}`;
 const TAR = process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe') : 'tar';
 const args = process.argv.slice(2);
 const nodeZip = args.includes('--node-zip') ? path.resolve(args[args.indexOf('--node-zip') + 1]) : null;

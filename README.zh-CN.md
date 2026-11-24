@@ -1,11 +1,11 @@
 <div align="center">
 
-# totk-blueprint
+# Zelda TotK Blueprint Editor
 
 **在电脑上设计《王国之泪》的究极手载具，然后在游戏里用究极建造直接造出来。**
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/Yanchen30247/totk-blueprint?label=release)](https://github.com/Yanchen30247/totk-blueprint/releases/latest)
+[![Release](https://img.shields.io/github/v/release/Yanchen30247/zelda-totk-blueprint-editor?label=release)](https://github.com/Yanchen30247/zelda-totk-blueprint-editor/releases/latest)
 ![Node.js 22.15+](https://img.shields.io/badge/node-22.15%2B-339933?logo=node.js&logoColor=white)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D6)
 
@@ -51,12 +51,12 @@
 
 ### 用 Release 包
 
-在 [Releases](https://github.com/Yanchen30247/totk-blueprint/releases/latest) 下载：
+在 [Releases](https://github.com/Yanchen30247/zelda-totk-blueprint-editor/releases/latest) 下载：
 
 | 包 | 内容 |
 |---|---|
-| `totk-blueprint-<版本>-win-x64-portable.zip` | 全部都有，包括 Node.js，解压就能用。仅限 Windows。 |
-| `totk-blueprint-<版本>.zip` | 同上但不带 Node.js，需要自己装 Node.js 22.15+；编辑器在 Linux、macOS 上也能跑。 |
+| `zelda-totk-blueprint-editor-<版本>-win-x64-portable.zip` | 全部都有，包括 Node.js，解压就能用。仅限 Windows。 |
+| `zelda-totk-blueprint-editor-<版本>.zip` | 同上但不带 Node.js，需要自己装 Node.js 22.15+；编辑器在 Linux、macOS 上也能跑。 |
 
 然后：
 
@@ -70,8 +70,8 @@
 ### 从源码运行
 
 ```powershell
-git clone https://github.com/Yanchen30247/totk-blueprint.git
-cd totk-blueprint
+git clone https://github.com/Yanchen30247/zelda-totk-blueprint-editor.git
+cd zelda-totk-blueprint-editor
 node tools/setup.js
 npm --prefix app install
 npm --prefix app run dev
