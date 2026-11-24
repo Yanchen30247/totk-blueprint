@@ -166,14 +166,6 @@ node tools/save_inject.js my-car.cai --write
 | `node tools/flat.js <json> [正则]` | 把 JSON 展平成 `键=值` |
 | `npm --prefix app test` | 测试：46 张官方设计图往返、吸附、欧拉角约定、粘合刚体 |
 
-## 已知限制
-
-- 这个工具会改你的存档。它会先备份、写完会检查，但你自己也最好留一份备份。
-- 基于游戏 1.4.x 版本的数据开发。这样写进去的蓝图在游戏里能正常显示和建造；但零件库里的零件没有每个都实际造过。
-- 有些地方还是推测，比如部分存档字段的含义、粘合成环游戏认不认。docs/formats.md 里都标出来了。
-
-欢迎提 issue 和 PR。
-
 ## 许可证
 
 [GPL-3.0](LICENSE)。便携包里还带了 Node.js，它有自己的许可证（`node/LICENSE`）。

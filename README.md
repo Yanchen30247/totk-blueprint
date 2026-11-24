@@ -184,17 +184,6 @@ All the formats involved (SARC, BYML, MSBT, BFRES, TexToGo textures, the save fi
 | `node tools/flat.js <json> [regex]` | Flatten JSON into `key=value` lines |
 | `npm --prefix app test` | Tests: all 46 game schematics round-trip, snapping, Euler order, bond bodies |
 
-## Limitations
-
-- This edits your save. It backs up first and checks what it wrote, but keep your own backups too.
-- Developed against game version 1.4.x. Blueprints written this way show up and build in game; not every part in
-  the library has been tried in a build.
-- A few things are still educated guesses, such as what some save fields mean and whether the game accepts bonds that
-  form a loop. docs/formats.md marks them.
-- The import window is Chinese only for now.
-
-Bug reports and pull requests are welcome.
-
 ## License
 
 [GPL-3.0](LICENSE). The portable package also contains Node.js, under its own license (`node/LICENSE`).
